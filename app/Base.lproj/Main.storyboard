@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -36,6 +36,7 @@
                         <viewLayoutGuide key="safeArea" id="IVs-Oh-AhK"/>
                     </view>
                     <connections>
+                        <outlet property="addMountButton" destination="n4s-Hy-JQ2" id="iyQ-Ed-r7h"/>
                         <outlet property="bar" destination="4pc-Ei-ihz" id="iy4-s8-7yt"/>
                         <outlet property="barBottom" destination="OK7-xG-JFg" id="vWW-y5-fIo"/>
                         <outlet property="barButtonWidth" destination="1Ax-5U-2CI" id="Wlc-g8-GEs"/>
@@ -128,10 +129,10 @@
                                     </connections>
                                 </button>
                                 <view contentMode="scaleToFill" horizontalHuggingPriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="qmg-M1-7W8" userLabel="Spacer">
-                                    <rect key="frame" x="148" y="0.0" width="229" height="43"/>
+                                    <rect key="frame" x="148" y="0.0" width="192" height="43"/>
                                 </view>
                                 <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5dl-UV-6qh" userLabel="Info">
-                                    <rect key="frame" x="383" y="0.0" width="31" height="43"/>
+                                    <rect key="frame" x="346" y="0.0" width="31" height="43"/>
                                     <accessibility key="accessibilityConfiguration" label="Settings"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="31" id="1Ax-5U-2CI"/>
@@ -143,6 +144,16 @@
                                     <connections>
                                         <action selector="showAbout:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="xbI-EN-avC"/>
                                         <outletCollection property="gestureRecognizers" destination="reB-As-gYu" appends="YES" id="ehk-hz-UIY"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n4s-Hy-JQ2">
+                                    <rect key="frame" x="383" y="0.0" width="31" height="43"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                    <state key="normal" image="Add Mount">
+                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="pressAddFolder:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t11-gc-eL3"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmm-tv-z35" userLabel="Paste">
@@ -171,6 +182,7 @@
                                 <constraint firstItem="IPm-l0-f25" firstAttribute="width" secondItem="5dl-UV-6qh" secondAttribute="width" id="ebo-yF-ffX"/>
                                 <constraint firstItem="5dl-UV-6qh" firstAttribute="width" secondItem="VCr-TW-PIZ" secondAttribute="width" id="fXl-3w-1Zj"/>
                                 <constraint firstItem="cJt-oG-BnW" firstAttribute="width" secondItem="5dl-UV-6qh" secondAttribute="width" id="oQb-HX-lTG"/>
+                                <constraint firstItem="5dl-UV-6qh" firstAttribute="width" secondItem="n4s-Hy-JQ2" secondAttribute="width" id="szC-cK-5ZR"/>
                             </constraints>
                         </stackView>
                     </subviews>
@@ -196,6 +208,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Add Mount" width="134" height="92"/>
         <image name="Hide Keyboard" width="32" height="32"/>
         <image name="Paste" width="20" height="21"/>
     </resources>

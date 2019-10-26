@@ -12,9 +12,11 @@
 #import "ArrowBarButton.h"
 #import "UserPreferences.h"
 #import "AboutViewController.h"
+#import "ExternalFolder.h"
 #include "fs/devices.h"
+#include "kernel/fs.h"
 
-@interface TerminalViewController () <UIGestureRecognizerDelegate>
+@interface TerminalViewController () <UIGestureRecognizerDelegate, UIDocumentPickerDelegate>
 
 @property UITapGestureRecognizer *tapRecognizer;
 @property (weak, nonatomic) IBOutlet TerminalView *termView;
@@ -34,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *barTrailing;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *barButtonWidth;
 
+@property (weak, nonatomic) IBOutlet UIButton *addMountButton;
 @property (weak, nonatomic) IBOutlet UIButton *pasteButton;
 @property (weak, nonatomic) IBOutlet UIButton *hideKeyboardButton;
 
@@ -71,6 +74,7 @@
     
     // SF Symbols is cool
     if (@available(iOS 13, *)) {
+        [self.addMountButton setImage:[UIImage systemImageNamed:@"folder.badge.plus"] forState:UIControlStateNormal];
         [self.pasteButton setImage:[UIImage systemImageNamed:@"doc.on.clipboard"] forState:UIControlStateNormal];
         [self.hideKeyboardButton setImage:[UIImage systemImageNamed:@"keyboard.chevron.compact.down"] forState:UIControlStateNormal];
         
@@ -231,6 +235,48 @@
         case ArrowLeft: [self pressKey:[self.terminal arrow:'D']]; break;
         case ArrowRight: [self pressKey:[self.terminal arrow:'C']]; break;
         case ArrowNone: break;
+    }
+}
+
+- (IBAction)pressAddFolder:(id)sender {
+    UIDocumentPickerViewController *picker = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:@[ @"public.folder"] inMode:UIDocumentPickerModeOpen];
+
+    picker.delegate = self;
+
+    [self presentViewController:picker animated:true completion:nil];
+}
+
+-(void)displayMountError {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Mount failed" message:@"Mounting the folder at the requested location failed." preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:true completion:nil];
+
+}
+
+- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls {
+    for (int i = 0; i < urls.count; i++) {
+        NSURL *url = urls[i];
+
+        NSString *defaultMountName = [NSString stringWithFormat:@"/mnt/%@", url.lastPathComponent];
+
+        UIAlertController *mountNameAlert = [UIAlertController alertControllerWithTitle:@"Mount location" message:@"Where do you want to mount the folder?" preferredStyle:UIAlertControllerStyleAlert];
+
+        [mountNameAlert addTextFieldWithConfigurationHandler:^void (UITextField *textField) {
+            textField.placeholder = defaultMountName;
+        }];
+
+        [mountNameAlert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        [mountNameAlert addAction:[UIAlertAction actionWithTitle:@"Mount" style:UIAlertActionStyleDefault handler:^void (UIAlertAction *action) {
+            UITextField *mountTextField = mountNameAlert.textFields.firstObject;
+            NSString *mountName = mountTextField.text.length > 0 ? mountTextField.text : defaultMountName;
+
+            createExternalfsIfRequired();
+            int err = do_mount_with_data(externalfs, [url.path UTF8String], [mountName UTF8String], 0, (void *) CFBridgingRetain(url));
+            if (err < 0)
+                [self displayMountError];
+        }]];
+
+        [self presentViewController:mountNameAlert animated:true completion:nil];
     }
 }
 

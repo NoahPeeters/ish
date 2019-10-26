@@ -37,7 +37,7 @@ void mount_release(struct mount *mount) {
     unlock(&mounts_lock);
 }
 
-int do_mount(const struct fs_ops *fs, const char *source, const char *point, int flags) {
+int do_mount_with_data(const struct fs_ops *fs, const char *source, const char *point, int flags, void *data) {
     struct mount *new_mount = malloc(sizeof(struct mount));
     if (new_mount == NULL)
         return _ENOMEM;
@@ -45,7 +45,7 @@ int do_mount(const struct fs_ops *fs, const char *source, const char *point, int
     new_mount->source = strdup(source);
     new_mount->flags = flags;
     new_mount->fs = fs;
-    new_mount->data = NULL;
+    new_mount->data = data;
     new_mount->refcount = 0;
     if (fs->mount) {
         int err = fs->mount(new_mount);
@@ -63,6 +63,10 @@ int do_mount(const struct fs_ops *fs, const char *source, const char *point, int
     }
     list_add_before(&mount->mounts, &new_mount->mounts);
     return 0;
+}
+
+int do_mount(const struct fs_ops *fs, const char *source, const char *point, int flags) {
+    return do_mount_with_data(fs, source, point, flags, NULL);
 }
 
 int mount_remove(struct mount *mount) {
