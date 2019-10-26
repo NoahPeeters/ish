@@ -10,6 +10,7 @@
 #include "kernel/fs.h"
 #include "fs/dev.h"
 #include "util/sync.h"
+#include "DeviceFile.h"
 
 @interface LocationTracker : NSObject <CLLocationManagerDelegate>
 
@@ -101,14 +102,9 @@ BOOL CLIsAuthorized(CLAuthorizationStatus status) {
 
 @end
 
-@interface LocationFile : NSObject {
-    NSData *buffer;
-    size_t bufferOffset;
-}
+@interface LocationFile : DeviceFile
 
 @property LocationTracker *tracker;
-
-- (ssize_t)readIntoBuffer:(void *)buf size:(size_t)size;
 
 @end
 
@@ -121,7 +117,7 @@ BOOL CLIsAuthorized(CLAuthorizationStatus status) {
     return self;
 }
 
-- (int)waitForUpdate {
+- (int)update {
     if (buffer != nil)
         return 0;
     int err = [self.tracker waitForUpdate];
@@ -134,41 +130,6 @@ BOOL CLIsAuthorized(CLAuthorizationStatus status) {
     return 0;
 }
 
-- (ssize_t)readIntoBuffer:(void *)buf size:(size_t)size {
-    @synchronized (self) {
-        int err = [self waitForUpdate];
-        if (err < 0)
-            return err;
-        size_t remaining = buffer.length - bufferOffset;
-        if (size > remaining)
-            size = remaining;
-        [buffer getBytes:buf range:NSMakeRange(bufferOffset, size)];
-        bufferOffset += size;
-        if (bufferOffset == buffer.length)
-            buffer = nil;
-        return size;
-    }
-}
-
 @end
 
-static int location_open(int major, int minor, struct fd *fd) {
-    fd->data = (void *) CFBridgingRetain([LocationFile new]);
-    return 0;
-}
-
-static int location_close(struct fd *fd) {
-    CFBridgingRelease(fd->data);
-    return 0;
-}
-
-static ssize_t location_read(struct fd *fd, void *buf, size_t size) {
-    LocationFile *file = (__bridge LocationFile *) fd->data;
-    return [file readIntoBuffer:buf size:size];
-}
-
-const struct dev_ops location_dev = {
-    .open = location_open,
-    .fd.close = location_close,
-    .fd.read = location_read,
-};
+DEFINE_SIMPLE_READ_DEV_OPS(LocationFile, location)

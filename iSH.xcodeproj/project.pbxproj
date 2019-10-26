@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		408A263A236440F8008A4E81 /* ExternalFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 408A2639236440F8008A4E81 /* ExternalFolder.m */; };
+		40434FF92362FD94000FF6CC /* BatteryDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 40434FF82362FD94000FF6CC /* BatteryDevice.m */; };
+		40434FFD23630A8F000FF6CC /* DeviceFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 40434FFC23630A8F000FF6CC /* DeviceFile.m */; };
 		650B337422EA235C00B4C03E /* PasteboardDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 650B337322EA235C00B4C03E /* PasteboardDevice.m */; };
 		8632A7BF219A59FB00F02325 /* UserPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 8632A7BE219A59FB00F02325 /* UserPreferences.m */; };
 		9A28E4EA219A8B670073D200 /* AboutAppearanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A28E4E9219A8B670073D200 /* AboutAppearanceViewController.m */; };
@@ -96,6 +98,10 @@
 /* Begin PBXFileReference section */
 		408A2639236440F8008A4E81 /* ExternalFolder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExternalFolder.m; sourceTree = "<group>"; };
 		408A263B23644102008A4E81 /* ExternalFolder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExternalFolder.h; sourceTree = "<group>"; };
+		40434FF82362FD94000FF6CC /* BatteryDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatteryDevice.m; sourceTree = "<group>"; };
+		40434FFA2362FDA9000FF6CC /* BatteryDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BatteryDevice.h; sourceTree = "<group>"; };
+		40434FFB23630A86000FF6CC /* DeviceFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceFile.h; sourceTree = "<group>"; };
+		40434FFC23630A8F000FF6CC /* DeviceFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceFile.m; sourceTree = "<group>"; };
 		650B335A22E9E46A00B4C03E /* mem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mem.c; sourceTree = "<group>"; tabWidth = 4; };
 		650B335B22E9E46A00B4C03E /* mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mem.h; sourceTree = "<group>"; tabWidth = 4; };
 		650B335D22E9EF9B00B4C03E /* proc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = proc.c; sourceTree = "<group>"; };
@@ -341,10 +347,14 @@
 		BB235532235D472F00139E00 /* Devices */ = {
 			isa = PBXGroup;
 			children = (
+				40434FFB23630A86000FF6CC /* DeviceFile.h */,
+				40434FFC23630A8F000FF6CC /* DeviceFile.m */,
 				650B337222EA235C00B4C03E /* PasteboardDevice.h */,
 				650B337322EA235C00B4C03E /* PasteboardDevice.m */,
 				BB235535235D489400139E00 /* LocationDevice.h */,
 				BB235533235D488400139E00 /* LocationDevice.m */,
+				40434FFA2362FDA9000FF6CC /* BatteryDevice.h */,
+				40434FF82362FD94000FF6CC /* BatteryDevice.m */,
 			);
 			name = Devices;
 			sourceTree = "<group>";
@@ -979,6 +989,7 @@
 				BB455E111FB37F6600AFB48B /* DelayedUITask.m in Sources */,
 				BB0FC5921F980A6C00803272 /* Terminal.m in Sources */,
 				BB82A7FD21B4C2E8006AA5FD /* AboutExternalKeyboardViewController.m in Sources */,
+				40434FFD23630A8F000FF6CC /* DeviceFile.m in Sources */,
 				8632A7BF219A59FB00F02325 /* UserPreferences.m in Sources */,
 				BB792B631F96D90D00FFB7A4 /* main.m in Sources */,
 				BB60F55221573FCA003A4E52 /* BarButton.m in Sources */,
@@ -987,6 +998,7 @@
 				650B337422EA235C00B4C03E /* PasteboardDevice.m in Sources */,
 				BBFB557121586C4800DFE6DE /* UIViewController+Back.m in Sources */,
 				408A263A236440F8008A4E81 /* ExternalFolder.m in Sources */,
+				40434FF92362FD94000FF6CC /* BatteryDevice.m in Sources */,
 				BBFB558021587B6800DFE6DE /* ArrowBarButton.m in Sources */,
 				BB792B551F96D90D00FFB7A4 /* AppDelegate.m in Sources */,
 			);

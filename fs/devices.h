@@ -38,7 +38,9 @@
 
 // /dev/clipboard
 #define DEV_CLIPBOARD_MINOR 0
-// /dev/gps
+// /dev/location
 #define DEV_LOCATION_MINOR 1
+// /dev/battery
+#define DEV_BATTERY_MINOR 2
 
 #endif
